@@ -1,0 +1,100 @@
+import random
+from collections import deque
+
+def generate_maze(rows, cols):
+    """
+    Generates a random maze. Walls are '#', paths are ' '.
+    'S' marks start, 'E' marks end.
+    """
+    # Initialize maze grid with all walls
+    maze = [['#'] * cols for _ in range(rows)]
+
+    def carve(x, y):
+        """Recursively carves paths (DFS-like)."""
+        maze[x][y] = ' ' # Mark current cell as path
+
+        # Possible directions to move (2 steps to create walls between paths)
+        dirs = [(0, 2), (0, -2), (2, 0), (-2, 0)]
+        random.shuffle(dirs) # Randomize direction order
+
+        for dx, dy in dirs:
+            nx, ny = x + dx, y + dy # Next cell coordinates
+
+            # Check if next cell is in bounds and is a wall
+            if 1 <= nx < rows - 1 and 1 <= ny < cols - 1 and maze[nx][ny] == '#':
+                # Carve path between current and next cell
+                maze[x + dx // 2][y + dy // 2] = ' '
+                carve(nx, ny) # Recursive call
+
+    # Start carving from an inner cell
+    carve(1, 1)
+
+    # Set start 'S' and end 'E' points
+    maze[1][0] = 'S'
+    maze[rows - 2][cols - 1] = 'E'
+    return maze
+
+def solve_maze(maze):
+    """
+    Solves the maze using Breadth-First Search (BFS) for the shortest path.
+    """
+    rows, cols = len(maze), len(maze[0])
+    start = (1, 0)
+    end = (rows - 2, cols - 1)
+
+    visited = set() # Track visited cells
+    # Queue for BFS: stores ((current_x, current_y), [path_taken_so_far])
+    queue = deque([(start, [])])
+
+    while queue:
+        (x, y), path = queue.popleft() # Get current cell and its path
+
+        if (x, y) == end: # If end reached, return path
+            return path + [(x, y)]
+
+        # Check neighbors (up, down, left, right)
+        for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+            nx, ny = x + dx, y + dy # Neighbor coordinates
+
+            # Check if neighbor is valid (in bounds, not wall, not visited)
+            if 0 <= nx < rows and 0 <= ny < cols and \
+               maze[nx][ny] != '#' and (nx, ny) not in visited:
+                
+                visited.add((nx, ny)) # Mark as visited
+                # Add neighbor to queue with updated path
+                queue.append(((nx, ny), path + [(x, y)]))
+    
+    return None # No path found
+
+def display_maze(maze, path=None):
+    """
+    Prints the maze to the terminal. Marks solution path with '.'.
+    """
+    for i, row in enumerate(maze):
+        line = ''
+        for j, cell in enumerate(row):
+            if path and (i, j) in path: # If cell is part of the path
+                line += '.'
+            else:
+                line += cell # Otherwise, use original maze character
+        print(line)
+
+# --- Example Usage ---
+if __name__ == "__main__":
+    maze_rows = 15
+    maze_cols = 25
+
+    print("Generating maze...")
+    my_maze = generate_maze(maze_rows, maze_cols)
+    print("Generated Maze:")
+    display_maze(my_maze)
+
+    print("\nSolving maze...")
+    solution_path = solve_maze(my_maze)
+
+    if solution_path:
+        print("Maze Solved! Path marked with '.':")
+        display_maze(my_maze, solution_path)
+    else:
+        print("No solution found.")
+

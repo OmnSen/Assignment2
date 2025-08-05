@@ -1,0 +1,11 @@
+def reverse_list(lst):
+#Getting the length of the list
+    n = len(lst)
+#Loop through the first half of the list
+#Each iteration swaps an element from the front with one from the back
+    for i in range(n // 2):
+# Swap element at index i with the element at index (n - 1 - i)
+# Example:i=0>swaplst[0] with lst[4] (first and last element)
+        lst[i], lst[n - 1 - i] = lst[n - 1 - i], lst[i]
+ # After all swaps, return the reversed list
+    return lst

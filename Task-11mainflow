@@ -1,0 +1,15 @@
+import math
+def calculate_lcm_gcd(a, b):
+# The GCD is the easiest to find using a built-in function
+    gcd = math.gcd(a, b)
+# Use the formula to find the LCM
+ # We use abs() in case a or b are negative, so we get a positive result
+    lcm = abs(a * b) // gcd
+    return lcm, gcd
+# Let's test it out
+lcm_result, gcd_result = calculate_lcm_gcd(12, 18)
+print(f"The GCD of 12 and 18 is: {gcd_result}")
+print(f"The LCM of 12 and 18 is: {lcm_result}")
+lcm_result, gcd_result = calculate_lcm_gcd(15, 25)
+print(f"The GCD of 15 and 25 is: {gcd_result}")
+print(f"The LCM of 15 and 25 is: {lcm_result}")

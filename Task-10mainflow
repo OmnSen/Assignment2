@@ -1,0 +1,13 @@
+def sum_of_digits(n):
+# Converting the number to a string
+    s = str(n)
+    total_sum = 0
+# Loop through each character digit in the string
+    for digit_char in s:
+# Convert the character back to an integer and add it to the sum
+     total_sum += int(digit_char)
+    return total_sum
+# Let's test it out
+print(f"The sum of the digits of 123 is: {sum_of_digits(123)}")
+print(f"The sum of the digits of 9876 is: {sum_of_digits(9876)}")
+print(f"The sum of the digits of 5 is: {sum_of_digits(5)}")

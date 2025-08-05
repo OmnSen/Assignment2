@@ -1,0 +1,16 @@
+def bubble_sort(my_list):
+    n = len(my_list)
+#Outer loop for passes
+    for i in range(n):
+#Inner loop for comparisons and swaps
+#We can stop one element earlier each time because the last element is already in place
+        for j in range(0, n - i - 1):
+#Compare adjacent elements
+            if my_list[j] > my_list[j + 1]:     
+#Swap them if the first is larger than the second
+                my_list[j], my_list[j + 1] = my_list[j + 1], my_list[j]
+    return my_list
+#Testing
+my_numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = bubble_sort(my_numbers)
+print(f"The original list was [64, 34, 25, 12, 22, 11, 90]. The sorted list is: {sorted_numbers}")

@@ -1,0 +1,10 @@
+def remove_duplicates(my_list):
+#Converting the list to a set to automatically remove duplicated
+    unique_set = set(my_list)
+#Converting the set back to a listed
+    unique_list = list(unique_set)
+    return unique_list
+#Testing
+my_numbers = [1, 2, 2, 3, 4, 4, 4, 5, 1]
+unique_numbers = remove_duplicates(my_numbers)
+print(f"The original list was [1, 2, 2, 3, 4, 4, 4, 5, 1]. The list with unique elements is: {unique_numbers}")

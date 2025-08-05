@@ -1,0 +1,14 @@
+def string_length(my_string):
+    count = 0
+#Looping through each character in the string
+    for char in my_string:
+#Adding 1 to our count for each character
+        count += 1
+    return count
+#Testing
+my_word = "olla"
+length = string_length(my_word)
+print(f"The length of the string '{my_word}' is: {length}")
+another_word = "Amigo"
+length = string_length(another_word)
+print(f"The length of the string '{another_word}' is: {length}")
